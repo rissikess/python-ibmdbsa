@@ -1,7 +1,10 @@
 CHANGES
 =======
+2016/10/13
+- Added new connector ceodbc for fast db read/write operations
+
 2016/08/30
--Added Support for Python 3.x
+- Added Support for Python 3.x
 
 2014/10/20 (IBM_DB_SA adaptor 0.3.2)
 - Added SSL support
