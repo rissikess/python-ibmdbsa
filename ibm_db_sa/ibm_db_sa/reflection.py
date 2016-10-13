@@ -23,7 +23,7 @@ from sqlalchemy import Table, MetaData, Column
 from sqlalchemy.engine import reflection
 import re
 import codecs
-
+from six import iteritems
 
 class CoerceUnicode(sa_types.TypeDecorator):
     impl = sa_types.Unicode
@@ -364,7 +364,7 @@ class DB2Reflector(BaseReflector):
             else:
                 fschema[r[0]]['constrained_columns'].append(self.normalize_name(r[3]))
                 fschema[r[0]]['referred_columns'].append(self.normalize_name(r[7]))
-        return [value for key, value in fschema.iteritems()]
+        return [value for key, value in iteritems(fschema)]
 
 
     @reflection.cache
@@ -677,7 +677,7 @@ class AS400Reflector(BaseReflector):
             else:
                 fschema[r[0]]['constrained_columns'].append(self.normalize_name(r[3]))
                 fschema[r[0]]['referred_columns'].append(self.normalize_name(r[7]))
-        return [value for key, value in fschema.iteritems()]
+        return [value for key, value in iteritems(fschema)]
 
     # Retrieves a list of index names for a given schema
     @reflection.cache
@@ -707,4 +707,4 @@ class AS400Reflector(BaseReflector):
                                 'column_names': [self.normalize_name(r[2])],
                                 'unique': r[1] == 'Y'
                         }
-        return [value for key, value in indexes.iteritems()]
+        return [value for key, value in iteritems(indexes)]

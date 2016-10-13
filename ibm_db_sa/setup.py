@@ -40,6 +40,10 @@ setup(
                      'db2.pyodbc=ibm_db_sa.pyodbc:DB2Dialect_pyodbc',
                      'db2.zxjdbc400=ibm_db_sa.zxjdbc:AS400Dialect_zxjdbc',
                      'db2.pyodbc400=ibm_db_sa.pyodbc:AS400Dialect_pyodbc',
+                   
+                     #changes for ceODBC
+                     'db2.ceodbc=ibm_db_sa.ceodbc:DB2Dialect_ceODBC',
+                     'db2.ceodbc400=ibm_db_sa.ceodbc:AS400Dialect_ceODBC',
 
                      # older "ibm_db_sa://" style for backwards
                      # compatibility
@@ -48,6 +52,11 @@ setup(
                      'ibm_db_sa.pyodbc=ibm_db_sa.pyodbc:DB2Dialect_pyodbc',
                      'ibm_db_sa.zxjdbc400=ibm_db_sa.zxjdbc:AS400Dialect_zxjdbc',
                      'ibm_db_sa.pyodbc400=ibm_db_sa.pyodbc:AS400Dialect_pyodbc',
+                      
+            
+                     #changes for ceODBC 
+                     'ibm_db_sa.ceodbc=ibm_db_sa.ceodbc:DB2Dialect_ceODBC',
+                     'ibm_db_sa.ceodbc400=ibm_db_sa.ceodbc:AS400Dialect_ceODBC',
                     ]
        },
        zip_safe=False,

@@ -29,6 +29,8 @@ from sqlalchemy.engine import default
 from sqlalchemy import __version__ as SA_Version
 from . import reflection as ibm_reflection
 
+
+
 from sqlalchemy.types import BLOB, CHAR, CLOB, DATE, DATETIME, INTEGER,\
     SMALLINT, BIGINT, DECIMAL, NUMERIC, REAL, TIME, TIMESTAMP,\
     VARCHAR, FLOAT
@@ -693,8 +695,12 @@ class DB2Dialect(default.DefaultDialect):
     # object which selects between DB2 and AS/400 schemas
     def initialize(self, connection):
         super(DB2Dialect, self).initialize(connection)
-        self.dbms_ver = connection.connection.dbms_ver
-        self.dbms_name = connection.connection.dbms_name
+        try:
+            self.dbms_ver = connection.connection.dbms_ver
+            self.dbms_name = connection.connection.dbms_name
+        except:
+            self.dbms_ver = "UNKNOWN"
+            self.dbms_name = "UNKNOWN"
         
     def normalize_name(self, name):
         return self._reflector.normalize_name(name)

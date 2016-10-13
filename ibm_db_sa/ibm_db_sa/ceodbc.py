@@ -18,23 +18,23 @@
 # +--------------------------------------------------------------------------+
 from sqlalchemy import util
 import urllib
-from sqlalchemy.connectors.pyodbc import PyODBCConnector
+from .ceodbc_connector import ceODBCConnector
 from .base import _SelectLastRowIDMixin, DB2ExecutionContext, DB2Dialect
 from . import reflection as ibm_reflection
 from six import iteritems
 
-class DB2ExecutionContext_pyodbc(_SelectLastRowIDMixin, DB2ExecutionContext):
+class DB2ExecutionContext_ceODBC(_SelectLastRowIDMixin, DB2ExecutionContext):
     pass
 
-class DB2Dialect_pyodbc(PyODBCConnector, DB2Dialect):
+class DB2Dialect_ceODBC(ceODBCConnector, DB2Dialect):
 
     supports_unicode_statements = False
     supports_char_length = True
     supports_native_decimal = False
 
-    execution_ctx_cls = DB2ExecutionContext_pyodbc
+    execution_ctx_cls = DB2ExecutionContext_ceODBC
 
-    pyodbc_driver_name = "IBM DB2 ODBC DRIVER"
+    ceODBC_driver_name = "IBM DB2 ODBC DRIVER"
 
     def create_connect_args(self, url):
         opts = url.translate_connect_args(username='user')
@@ -64,7 +64,7 @@ class DB2Dialect_pyodbc(PyODBCConnector, DB2Dialect):
                 database = keys.pop('database', '')
 
                 connectors = ["DRIVER={%s}" %
-                                keys.pop('driver', self.pyodbc_driver_name),
+                                keys.pop('driver', self.ceODBC_driver_name),
                             'hostname=%s;port=%s' % (keys.pop('host', ''), port),
                             'database=%s' % database]
 
@@ -87,7 +87,7 @@ class DB2Dialect_pyodbc(PyODBCConnector, DB2Dialect):
                                     for k, v in iteritems(keys)])
         return [[";".join(connectors)], connect_args]
 
-class AS400Dialect_pyodbc(PyODBCConnector, DB2Dialect):
+class AS400Dialect_ceODBC(ceODBCConnector, DB2Dialect):
 
     supports_unicode_statements = False
     supports_sane_rowcount = False
@@ -96,7 +96,7 @@ class AS400Dialect_pyodbc(PyODBCConnector, DB2Dialect):
     supports_char_length = True
     supports_native_decimal = False
 
-    pyodbc_driver_name = "iSeries Access ODBC Driver"
+    ceODBC_driver_name = "iSeries Access ODBC Driver"
 
     _reflector_cls = ibm_reflection.AS400Reflector
 
@@ -121,7 +121,7 @@ class AS400Dialect_pyodbc(PyODBCConnector, DB2Dialect):
               connectors = ['dsn=%s' % (keys.pop('host', '') or \
                                             keys.pop('dsn', ''))]
           else:
-              connectors = ["DRIVER={%s}" % keys.pop('driver', self.pyodbc_driver_name),
+              connectors = ["DRIVER={%s}" % keys.pop('driver', self.ceODBC_driver_name),
                             'System=%s' % keys.pop('host', ''),
                             'DBQ=QGPL']
               connectors.append("PKG=QGPL/DEFAULT(IBM),2,0,1,0,512")
